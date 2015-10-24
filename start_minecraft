@@ -4,4 +4,4 @@ if [ ! -e /minecraft/eula.txt ]; then
     echo 'eula=true' >> eula.txt
 fi
 
-exec java $JVM_OPTS -jar minecraft.jar nogui
+exec java ${JVM_OPTS} -jar /"${MC_SERVER_JAR}" nogui

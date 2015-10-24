@@ -1,0 +1,21 @@
+#!/bin/sh
+
+mc_base_url='https://s3.amazonaws.com/Minecraft.Download/versions'
+
+case ${MC_VERSION} in
+  latest)
+    version=$(curl -Ls "${mc_base_url}"/versions.json | jq '.latest.release' | tr -d \")
+  ;;
+  snapshot)
+    version=$(curl -Ls "${mc_base_url}"/versions.json | jq '.latest.snapshot' | tr -d \")
+  ;;
+  *)
+    version=${MC_VERSION}
+  ;;
+esac
+
+mc_server_jar="minecraft_server.${version}.jar"
+
+curl -Lso /"${mc_server_jar}" "${mc_base_url}/${version}/${mc_server_jar}"
+
+echo "export MC_SERVER_JAR=${mc_server_jar}" >> /.mc_environment
